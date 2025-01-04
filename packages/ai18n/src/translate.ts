@@ -1,9 +1,9 @@
 import debug from "debug";
-import type { ChatCompletionRequestMessage, OpenAIApi } from "openai";
+import type OpenAI from "openai";
 
 const log = debug("ai18n:translate");
 
-const DEFAULT_TEMPLATE: ChatCompletionRequestMessage[] = [
+const DEFAULT_TEMPLATE: OpenAI.Chat.ChatCompletionMessageParam[] = [
   {
     role: "user",
     content:
@@ -29,25 +29,26 @@ const DEFAULT_TEMPLATE: ChatCompletionRequestMessage[] = [
 ];
 
 export async function translate(
-  api: OpenAIApi,
+  api: OpenAI,
   content: string,
   to: string,
-  template: ChatCompletionRequestMessage[] = DEFAULT_TEMPLATE,
+  template: OpenAI.Chat.ChatCompletionMessageParam[] = DEFAULT_TEMPLATE,
 ): Promise<string> {
   const messages = template.map((m) => ({
     role: m.role,
-    content: build(m.content, { to, content }),
+    content: m.content,
+    ...((m as any).name && { name: (m as any).name }), // Include name if it exists
   }));
   log("translate", { content, to, messages });
 
-  const res = await api.createChatCompletion({
-    model: "gpt-3.5-turbo",
+  const res: OpenAI.Chat.ChatCompletion = await api.chat.completions.create({
+    model: process.env.OPENAI_MODEL || "gpt-3.5-turbo",
     messages,
     temperature: 0,
   });
 
-  log("translate usage", res.data.usage);
-  const translated = res.data.choices[0].message?.content;
+  log("translate usage", res.usage);
+  const translated = res.choices[0].message?.content;
   if (!translated) {
     throw new Error("No translation returned.");
   }

@@ -3,7 +3,7 @@ import path from "node:path";
 import { program } from "commander";
 import debug from "debug";
 import { config } from "dotenv";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import { cleanup, detect, inject } from "./inline";
 import { pkg } from "./pkg";
 import { translate } from "./translate";
@@ -68,9 +68,10 @@ program
         process.exit(1);
       }
 
-      const openai = new OpenAIApi(
-        new Configuration({ apiKey: process.env.OPENAI_API_KEY }),
-      );
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+        baseURL: process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
+      });
 
       files = files.map((file) => path.resolve(file));
       const base = common_base(files);
