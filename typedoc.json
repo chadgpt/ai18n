@@ -1,6 +1,6 @@
 {
-	"entryPoints": ["packages/*"],
-	"name": "Packages Example",
-	"entryPointStrategy": "packages",
-	"includeVersion": true
+  "entryPoints": ["packages/*"],
+  "name": "Packages Example",
+  "entryPointStrategy": "packages",
+  "includeVersion": true
 }

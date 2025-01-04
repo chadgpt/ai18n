@@ -7,16 +7,16 @@ semi: true
 singleQuote: false
 
 overrides:
-    - files: "*.md"
-      options:
-          useTabs: false
+  - files: "*.md"
+    options:
+      useTabs: false
 
 plugins:
-    - ./node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
+  - ./node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js
 pluginSearchDirs: false
 
 importOrder:
-    - "^node:"
-    - "^[^@.]"
-    - "^@"
-    - "^\\."
+  - "^node:"
+  - "^[^@.]"
+  - "^@"
+  - "^\\."
