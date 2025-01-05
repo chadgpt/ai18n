@@ -1,7 +1,7 @@
 {
-  "name": "ai18n",
+  "name": "@btwiuse/ai18n",
   "description": "I18n Automation.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "JacobLinCool <jacob@csie.cool> (https://jacoblin.cool)",
   "license": "MIT",
   "keywords": [],

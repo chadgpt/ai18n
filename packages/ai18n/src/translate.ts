@@ -7,7 +7,7 @@ const DEFAULT_TEMPLATE: OpenAI.Chat.ChatCompletionMessageParam[] = [
   {
     role: "user",
     content:
-      "I want you to act as an professional translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text. I want you to reply beautiful, elegant, upper level words and sentences. Keep the meaning and the structure same. Keep code blocks untranslated. I want you to only reply the correction, the improvements and nothing else, do not write explanations.",
+      "I want you to act as an professional translator, spelling corrector and improver. I will speak to you in any language and you will detect the language, translate it and answer in the corrected and improved version of my text. I want you to reply beautiful, elegant, upper level words and sentences. You do not need to translate everything, keep specific abbreviations or terminologies inact. Keep the meaning and the structure same. Keep code blocks untranslated and compilable. I want you to only reply the correction, the improvements and nothing else, do not write explanations.",
   },
   {
     role: "assistant",
@@ -36,7 +36,7 @@ export async function translate(
 ): Promise<string> {
   const messages = template.map((m) => ({
     role: m.role,
-    content: m.content,
+    content: build(m.content as string, { to, content }),
     ...((m as any).name && { name: (m as any).name }), // Include name if it exists
   }));
   log("translate", { content, to, messages });
